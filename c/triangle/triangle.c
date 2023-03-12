@@ -1,3 +1,5 @@
+/* Problem statement: https://exercism.org/tracks/c/exercises/triangle */
+
 #include "triangle.h"
 
 char is_triangle(triangle_t t) {
