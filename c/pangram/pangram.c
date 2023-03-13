@@ -1,3 +1,5 @@
+/* problem statement: https://exercism.org/tracks/c/exercises/pangram */
+
 #include "pangram.h"
 #include <ctype.h>
 #include <stdio.h>
@@ -11,7 +13,6 @@ bool is_pangram(const char *sentence) {
 
     for (const char *c = sentence; *c != '\0'; c++)
         if (isalpha(*c))
-            // printf("%d\n", tolower(*c) - 97);
             count[tolower(*c) - 97]++;
 
     for (int i = 0; i < 26; i++)
