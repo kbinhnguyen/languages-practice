@@ -1,3 +1,5 @@
+/* problem statement: https://exercism.org/tracks/c/exercises/linked-list */
+
 #include "linked_list.h"
 #include <stdlib.h>
 
