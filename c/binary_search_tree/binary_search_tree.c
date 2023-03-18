@@ -1,3 +1,5 @@
+// problem statement: https://exercism.org/tracks/c/exercises/binary-search-tree
+
 #include "binary_search_tree.h"
 #include <stdlib.h>
 
@@ -30,45 +32,39 @@ node_t *build_tree(int *tree_data, size_t tree_data_len) {
                     } else curr = curr->right;
                 }
             }
-
         }
     } else root = NULL;
     return root;
-
 }
-
 
 void free_tree(node_t *tree) {
     if (!tree) return;
-    node_t *left = tree->left;
-    node_t *right = tree->right;
+
+    free_tree(tree->left);
+    free_tree(tree->right);
     free(tree);
-    free_tree(left);
-    free_tree(right);
 }
 
-
-int size_of_tree(node_t *tree, int curr_count) {
+int size_of_tree(node_t *tree) {
     if (!tree) return 0;
 
-    int count = curr_count + 1; // current node
-    count += size_of_tree(tree->left, curr_count) + size_of_tree(tree->right, curr_count);
+    int count = 1; // current node
+    count += size_of_tree(tree->left) + size_of_tree(tree->right);
     return count;
 }
 
-
 void inorder_traversal(node_t *tree, int *arr, int index) {
     if (!tree) return;
+
     inorder_traversal(tree->left, arr, index);
-    int left_size = size_of_tree(tree->left, 0);
+    int left_size = size_of_tree(tree->left);
     arr[index + left_size] = tree->data;
     inorder_traversal(tree->right, arr, index + left_size + 1);
 }
 
-
 int *sorted_data(node_t *tree) {
-    // in-order traversal
-    int *arr = malloc(sizeof(int) * size_of_tree(tree, 0));
+    int *arr = malloc(sizeof(int) * size_of_tree(tree));
+
     inorder_traversal(tree, arr, 0);
     return arr;
 }
