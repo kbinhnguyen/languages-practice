@@ -10,6 +10,15 @@ list *create_stack() {
     return l;
 }
 
+void destroy_stack(list *stack) {
+    while (stack->head) {
+        node *curr = stack->head;
+        stack->head = curr->next;
+        free(curr);
+    }
+    free(stack);
+}
+
 bool stack_is_empty(list *l) {
     return (l->size) == 0;
 }
@@ -37,13 +46,12 @@ char stack_pop(list *l) {
 bool is_paired(const char *input) {
     list *stack = create_stack();
 
-    for (int i = 0; input[i] != '\0'; i++) {
-        const char c = input[i];
-        switch(c) {
+    for (const char *c = input; *c != '\0'; c++) {
+        switch(*c) {
             case '[':
             case '{':
             case '(':
-                stack_push(stack, c);
+                stack_push(stack, *c);
                 break;
             case ']':
                 if (stack_is_empty(stack) || stack_pop(stack) != '[')
@@ -59,8 +67,7 @@ bool is_paired(const char *input) {
                 break;
         }
     }
-
     bool ans = stack_is_empty(stack);
-    free(stack);
+    destroy_stack(stack);
     return ans;
 }

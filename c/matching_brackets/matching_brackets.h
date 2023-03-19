@@ -18,6 +18,8 @@ struct linked_list {
 
 list *create_stack();
 
+void destroy_stack(list *stack);
+
 bool stack_is_empty(list *l);
 
 void stack_push(list *l, char c);
