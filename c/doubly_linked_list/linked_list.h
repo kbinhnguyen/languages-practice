@@ -1,13 +1,22 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
-
 #include <stddef.h>
 
 typedef int ll_data_t;
-struct list;
+
+struct list_node {
+   struct list_node *prev, *next;
+   ll_data_t data;
+};
+
+struct list {
+   struct list_node *first, *last;
+};
 
 // constructs a new (empty) list
 struct list *list_create(void);
+
+struct list_node *create_node(ll_data_t data, struct list_node *prev, struct list_node *next);
 
 // counts the items on a list
 size_t list_count(const struct list *list);

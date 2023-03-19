@@ -3,20 +3,19 @@
 #include "linked_list.h"
 #include <stdlib.h>
 
-struct list_node {
-   struct list_node *prev, *next;
-   ll_data_t data;
-};
-
-struct list {
-   struct list_node *first, *last;
-};
+struct list_node *create_node(ll_data_t data, struct list_node *prev, struct list_node *next) {
+    struct list_node *n = malloc(sizeof(struct list_node));
+    n->data = data;
+    n->prev = prev;
+    n->next = next;
+    return n;
+}
 
 // constructs a new (empty) list
 struct list *list_create(void) {
    struct list *new_list = malloc(sizeof(struct list));
-   new_list->first = NULL;
-   new_list->last = NULL;
+    new_list->first = NULL;
+    new_list->last = NULL;
    return new_list;
 }
 
@@ -36,10 +35,7 @@ size_t list_count(const struct list *list) {
 // inserts item at back of a list
 void list_push(struct list *list, ll_data_t item_data) {
    if (list == NULL) list = list_create();
-   struct list_node *new_tail = malloc(sizeof(struct list_node));
-   new_tail->data = item_data;
-   new_tail->prev = list->last;
-   new_tail->next = NULL;
+   struct list_node *new_tail = create_node(item_data, list->last, NULL);
    if (list->last != NULL) list->last->next = new_tail;
    list->last = new_tail;
    if (list->first == NULL) list->first = new_tail;
@@ -59,10 +55,7 @@ ll_data_t list_pop(struct list *list) {
 // inserts item at front of a list
 void list_unshift(struct list *list, ll_data_t item_data) {
    if (list == NULL) list = list_create();
-   struct list_node *new_head = malloc(sizeof(struct list_node));
-   new_head->data = item_data;
-   new_head->next = list->first;
-   new_head->prev = NULL;
+   struct list_node *new_head = create_node(item_data, NULL, list->first);
    if (list->last == NULL) list->last = new_head;
    if (list->first != NULL) list->first->prev = new_head;
    list->first = new_head;
