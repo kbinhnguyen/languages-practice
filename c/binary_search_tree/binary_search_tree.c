@@ -3,21 +3,23 @@
 #include "binary_search_tree.h"
 #include <stdlib.h>
 
+node_t *create_node(int data) {
+    node_t *n = malloc(sizeof(node_t));
+    n->data = data;
+    n->left = NULL;
+    n->right = NULL;
+    return n;
+}
+
 node_t *build_tree(int *tree_data, size_t tree_data_len) {
     node_t *root;
 
     if (tree_data_len > 0) {
-        root = malloc(sizeof(node_t));
-        root->data = tree_data[0];
-        root->left = NULL;
-        root->right = NULL;
+        root = create_node(tree_data[0]);
 
         for (size_t i = 1; i < tree_data_len; i++) {
             node_t *curr = root;
-            node_t *next = malloc(sizeof(node_t));
-            next->data = tree_data[i];
-            next->left = NULL;
-            next->right = NULL;
+            node_t *next = create_node(tree_data[i]);
 
             while (curr) {
                 if (tree_data[i] <= curr->data) {
@@ -39,7 +41,6 @@ node_t *build_tree(int *tree_data, size_t tree_data_len) {
 
 void free_tree(node_t *tree) {
     if (!tree) return;
-
     free_tree(tree->left);
     free_tree(tree->right);
     free(tree);
@@ -55,7 +56,6 @@ int size_of_tree(node_t *tree) {
 
 void inorder_traversal(node_t *tree, int *arr, int index) {
     if (!tree) return;
-
     inorder_traversal(tree->left, arr, index);
     int left_size = size_of_tree(tree->left);
     arr[index + left_size] = tree->data;
@@ -64,7 +64,6 @@ void inorder_traversal(node_t *tree, int *arr, int index) {
 
 int *sorted_data(node_t *tree) {
     int *arr = malloc(sizeof(int) * size_of_tree(tree));
-
     inorder_traversal(tree, arr, 0);
     return arr;
 }

@@ -12,11 +12,13 @@ struct node {
 
 node_t *build_tree(int *tree_data, size_t tree_data_len);
 
+node_t *create_node(int data);
+
 void free_tree(node_t *tree);
 
 void inorder_traversal(node_t *tree, int *arr, int index);
 
-int size_of_tree(node_t *tree, int curr_count);
+int size_of_tree(node_t *tree);
 
 int *sorted_data(node_t *tree);
 
