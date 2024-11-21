@@ -2,10 +2,15 @@
 #include "binary_search.h"
 
 const int *binary_search(int value, const int *arr, size_t length) {
-    if (arr >= arr + length) return NULL;
+    if (length < 1)
+        return NULL;
+    else if (length == 1)
+        return *arr == value ? arr : NULL;
 
-    const int *mid = arr + (length / 2);
-    if (*mid == value) return mid;
-    else if (*mid > value) return binary_search(value, arr, length / 2);
-    return binary_search(value, (mid + 1), length % 2 == 0 ? length / 2 - 1 : length / 2);
+    int mid = (length - 1) / 2;
+    if (arr[mid] == value)
+        return arr + mid;
+    else if (arr[mid] > value)
+        return binary_search(value, arr, mid);
+    return binary_search(value, arr + mid + 1, length - mid - 1);
 }
